@@ -43,3 +43,9 @@ for i, chunk_index in enumerate(indices, start=1):
     print(f"Chunk {i}:")
     print(chunks[chunk_index])
     print()
+    
+# combine the retrieved chunks into one context
+context = "\n\n".join([chunks[i] for i in indices])
+
+print("Context:")
+print(context)
