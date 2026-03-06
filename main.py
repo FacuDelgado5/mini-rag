@@ -1,5 +1,6 @@
 from pdf_loader import load_pdf
 from chunking import split_text_with_overlap
+from embeddings import create_embeddings
 
 # load the PDF and combine all pages
 documents = load_pdf("data/documento.pdf")
@@ -17,4 +18,18 @@ chunks = split_text_with_overlap(
 )
 
 print("Number of chunks:", len(chunks))
+
+# generate embeddings for each chunk
+embeddings = create_embeddings(chunks)
+
+print("Number of embeddings:", len(embeddings))
+print("Embedding dimension:", len(embeddings[0]))
+
+print()
+print("First chunk:")
+print(chunks[0])
+
+print()
+print("First embedding (first values):")
+print(embeddings[0][:10])
 
