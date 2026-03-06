@@ -1,4 +1,4 @@
-#Split text into chunks with overlap.
+# split text into chunks with overlap.
 def split_text_with_overlap(text, chunk_size=100, overlap_fraction=0.2):
     
     words = text.split()
@@ -15,4 +15,4 @@ def split_text_with_overlap(text, chunk_size=100, overlap_fraction=0.2):
 
         chunks.append(chunk)
 
-    return chunks
+    return chunks 
