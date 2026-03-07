@@ -5,7 +5,8 @@ from vector_store import create_faiss_index, search_similar_chunks
 from rag_answer import answer_with_context      
 
 # load the PDF and combine all pages
-documents = load_pdf("data/documento.pdf")
+pdf_path = input("Ruta del PDF: ")
+documents = load_pdf(pdf_path)
 
 full_text = ""
 
@@ -25,7 +26,7 @@ embeddings = create_embeddings(chunks)
 # build the FAISS index
 index = create_faiss_index(embeddings)
 
-query = "¿Qué es la regresión lineal?"
+query = input("Pregunta: ")
 query_embedding = create_query_embedding(query)
 
 distances, indices = search_similar_chunks(index, query_embedding, top_k=3)
