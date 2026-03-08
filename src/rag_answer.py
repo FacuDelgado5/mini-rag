@@ -2,7 +2,6 @@ import ollama
 
 # generate an answer using the retrieved context
 def answer_with_context(query, context):
-
     prompt = f"""
 You are a helpful assistant answering questions about a document.
 

@@ -1,8 +1,8 @@
-from pdf_loader import load_pdf
-from chunking import split_text_with_overlap
-from embeddings import create_embeddings, create_query_embedding
-from vector_store import create_faiss_index, search_similar_chunks
-from rag_answer import answer_with_context      
+from src.pdf_loader import load_pdf
+from src.chunking import split_text_with_overlap
+from src.embeddings import create_embeddings, create_query_embedding
+from src.vector_store import create_faiss_index, search_similar_chunks
+from src.rag_answer import answer_with_context      
 
 # load the selected PDFs and combine their text
 while True:
@@ -51,12 +51,4 @@ answer = answer_with_context(query, context)
 print("\nRespuesta:")
 print(answer)
 
-print(f"\n--- INFO DE PDFs CARGADOS ---")
-print(f"Total de PDFs: {pdf_count}")
-print(f"Total de caracteres combinados: {len(full_text)}")
-print(f"Total de chunks generados: {len(chunks)}")
-print("------------------------------")
 
-print(f"\n--- CONTEXTO RECUPERADO (top {len(indices)} chunks) ---")
-print(context)
-print("-------------------------------------------------------")
