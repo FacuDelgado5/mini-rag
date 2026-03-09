@@ -1,10 +1,5 @@
-from src.pdf_loader import load_pdf
-from src.chunking import split_text_with_overlap
-from src.embeddings import create_embeddings, create_query_embedding
-from src.vector_store import create_faiss_index, search_similar_chunks
-from src.rag_answer import answer_with_context      
+from src.rag_pipeline import run_rag
 
-# load the selected PDFs and combine their text
 while True:
     try:
         pdf_count = int(input("\n¿Cuántos PDFs quiere cargar? (1-3): "))
@@ -12,43 +7,25 @@ while True:
         if 1 <= pdf_count <= 3:
             break
         else:
-            print("\nSolo puede cargar entre 1 y 3 PDFs. Intente nuevamente.\n")
+            print("\nSolo puede cargar entre 1 y 3 PDFs. Intente nuevamente.")
     except ValueError:
-        print("\nError: Ingrese un número válido entre 1 y 3.\n")
+        print("\nError: Ingrese un número válido entre 1 y 3.")
 
-full_text = ""
+pdf_paths = []
 
 for i in range(pdf_count):
-    pdf_path = input(f"Ingrese la ruta del PDF {i + 1}: ")
-    documents = load_pdf(pdf_path)
-    
-    for doc in documents:
-        full_text += doc.page_content + "\n"
+    pdf_path = input(f"Ingrese la ruta del PDF {i + 1}: ").strip()
+    pdf_paths.append(pdf_path)
 
-# split the document into overlapping chunks
-chunks = split_text_with_overlap(
-    full_text,
-    chunk_size=100,
-    overlap_fraction=0.2
-)
+while True:
+    query = input("\nPregunta: ").strip()
 
-# generate embeddings for each chunk
-embeddings = create_embeddings(chunks)
+    if query:
+        break
+    else:
+        print("\nError: Debes escribir una pregunta.")
 
-# build the FAISS index
-index = create_faiss_index(embeddings)
-
-query = input("\nPregunta: ")
-query_embedding = create_query_embedding(query)
-
-distances, indices = search_similar_chunks(index, query_embedding, top_k=5)
-
-# combine the retrieved chunks into one context
-context = "\n\n".join([chunks[i] for i in indices])
-
-answer = answer_with_context(query, context)
+answer = run_rag(pdf_paths, query)
 
 print("\nRespuesta:")
 print(answer)
-
-
